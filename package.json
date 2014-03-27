@@ -3,12 +3,9 @@
   "version": "0.0.0",
   "description": "aa-chan",
   "main": "lib/chan.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LightSpeedWorks/aa-chan.git"
+  "dependencies": {},
+  "devDependencies": {
+    "co": ">=3.0.5"
   },
   "keywords": [
     "chan",
@@ -20,8 +17,15 @@
   ],
   "author": "LightSpeedC",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LightSpeedWorks/aa-chan.git"
+  },
   "bugs": {
     "url": "https://github.com/LightSpeedWorks/aa-chan/issues"
   },
-  "homepage": "https://github.com/LightSpeedWorks/aa-chan"
+  "homepage": "https://github.com/LightSpeedWorks/aa-chan#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
