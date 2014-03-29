@@ -4,6 +4,11 @@ aa-chan - async await channel
   A [go](http://golang.org) style channel implementation
   that works well with [co](https://github.com/visionmedia/co).
 
+  Channel has a buffer size, and default size is 0.
+
+  Sender can await until the value pushed into buffer or
+  until the value received by receiver.
+
   [Japanese version/■日本語版はこちら■](README-JP.md#readme)
 
 Installation
