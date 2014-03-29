@@ -24,3 +24,6 @@ ch(function (err, value) {
     console.log('recv: ch =', value);
   }
 });
+
+// send: ch = 123
+// recv: ch = 123

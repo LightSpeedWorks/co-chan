@@ -88,6 +88,15 @@ co(function *() {
 })();
 ```
 
+出力:
+
+```
+recv: ch1 = 12
+send: ch2 = 34
+send: ch1 = 12
+recv: ch2 = 34
+```
+
 ### 値の送り込みを待ち、値の受け取りを待ちます。
 
 ```js
@@ -147,6 +156,18 @@ co(function *() {
 })();
 ```
 
+出力:
+
+```
+recv: ch1 = 12
+sent: ch1 = 12
+recv: ch2 = 34
+sent: ch2 = 34
+recv: ch1 err Error: custom error
+sent: ch1 err
+recv: ch2 is empty
+```
+
 付録
 ----
 
@@ -175,6 +196,13 @@ ch(function (err, value) {
 });
 ```
 
+出力:
+
+```
+send: ch = 123
+recv: ch = 123
+```
+
 ### 通常の node 関数から値を取得するために、コールバック関数としてチャネルをセットする
 
 ```js
@@ -198,6 +226,13 @@ ch(function (err, contents) {
     console.log('recv: ch =', String(contents));
   }
 });
+```
+
+出力:
+
+```
+read: to ch
+recv: ch = this is README.md
 ```
 
 ライセンス

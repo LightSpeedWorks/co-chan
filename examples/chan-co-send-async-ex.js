@@ -39,3 +39,8 @@ co(function *() {
   console.log('recv: ch2 =', value);
 
 })();
+
+// recv: ch1 = 12
+// send: ch2 = 34
+// send: ch1 = 12
+// recv: ch2 = 34

@@ -87,6 +87,14 @@ co(function *() {
 })();
 ```
 
+output:
+
+```
+recv: ch1 = 12
+send: ch2 = 34
+send: ch1 = 12
+recv: ch2 = 34
+```
 
 ### await for send value, await for receive value
 
@@ -147,7 +155,17 @@ co(function *() {
 })();
 ```
 
+output:
 
+```
+recv: ch1 = 12
+sent: ch1 = 12
+recv: ch2 = 34
+sent: ch2 = 34
+recv: ch1 err Error: custom error
+sent: ch1 err
+recv: ch2 is empty
+```
 
 Appendix
 --------
@@ -177,6 +195,13 @@ ch(function (err, value) {
 });
 ```
 
+output:
+
+```
+send: ch = 123
+recv: ch = 123
+```
+
 ### get value from regular node function, set channel as callback function
 
 ```js
@@ -200,6 +225,13 @@ ch(function (err, contents) {
     console.log('recv: ch =', String(contents));
   }
 });
+```
+
+output:
+
+```
+read: to ch
+recv: ch = this is README.md
 ```
 
 License

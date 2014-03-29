@@ -66,3 +66,11 @@ co(function *() {
   }
 
 })();
+
+// recv: ch1 = 12
+// sent: ch1 = 12
+// recv: ch2 = 34
+// sent: ch2 = 34
+// recv: ch1 err Error: custom error
+// sent: ch1 err
+// recv: ch2 is empty

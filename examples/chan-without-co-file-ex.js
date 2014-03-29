@@ -27,3 +27,6 @@ ch(function (err, contents) {
     console.log('recv: ch =', String(contents));
   }
 });
+
+// read: to ch
+// recv: ch = this is README.md
