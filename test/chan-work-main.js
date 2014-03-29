@@ -2,7 +2,11 @@
 
 'use strict';
 
-var makeChan = require('../lib/chan');
+try {
+  var chan = require('aa-chan');
+} catch (err) {
+  var chan = require('../lib/chan');
+}
 
 function cb(err, val) {
   if (err) {
@@ -28,7 +32,7 @@ function cb2(err, val) {
   }
 } // cb2
 
-var ch = makeChan();
+var ch = chan();
 console.log('ch 1');
 ch(1); // send
 console.log('ch 2');
@@ -55,7 +59,7 @@ try {
 }
 console.log();
 
-var ch = makeChan();
+var ch = chan();
 console.log('ch 1');
 ch(1)(cb2); // send
 console.log('ch 2');
@@ -82,7 +86,7 @@ try {
 }
 console.log();
 
-var ch = makeChan(null, 1);
+var ch = chan(null, 1);
 console.log('ch 1');
 ch(1)(cb2); // send
 console.log('ch 2');
@@ -103,7 +107,7 @@ console.log('ch');
 ch(cb); // recv
 console.log();
 
-var ch = makeChan(null, 2);
+var ch = chan(null, 2);
 console.log('ch 1');
 ch(1)(cb2); // send
 console.log('ch 2');
@@ -141,7 +145,7 @@ ch(cb); // recv
 console.log();
 
 
-var ch = makeChan(null, Infinity);
+var ch = chan(null, Infinity);
 console.log('ch 1');
 ch(1)(cb2); // send
 console.log('ch 2');

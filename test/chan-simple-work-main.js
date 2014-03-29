@@ -2,9 +2,9 @@
 
 'use strict';
 
-var makeChan = require('../lib/chan-simple');
+var chan = require('../lib/chan-simple');
 
-var ch = makeChan();
+var ch = chan();
 
 function cb(err, val) {
   if (err) {
