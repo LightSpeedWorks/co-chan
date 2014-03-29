@@ -107,14 +107,14 @@ co(function *() {
 
   // チャネル#2に値を送り込み、受け取られるまで待ちます。
   yield ch2(34);
-  console.log('send: ch2 = 34');
+  console.log('sent: ch2 = 34');
 
   try {
     // チャネル#1からエラーを受け取ります。
     value = yield ch1;
     console.log('recv: ch1 =', value);
   } catch (err) {
-    console.log(String(err));
+    console.log('recv: ch1 err', String(err));
   }
 
   // チャネル#2を閉じます。
@@ -126,7 +126,7 @@ co(function *() {
 
   // チャネル#1に値を送り込み、受け取られるまで待ちます。
   yield ch1(12);
-  console.log('send: ch1 = 12');
+  console.log('sent: ch1 = 12');
 
   // チャネル#2から値を受け取ります。
   var value = yield ch2;
@@ -134,7 +134,7 @@ co(function *() {
 
   // チャネル#1に値を送り込み、受け取られるまで待ちます。
   yield ch1(new Error('custom error'));
-  console.log('send: ch1 err');
+  console.log('sent: ch1 err');
 
   // 閉じられようとしているチャネル#2から値を受け取ります。
   value = yield ch2;

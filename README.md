@@ -107,14 +107,14 @@ co(function *() {
 
   // send value into channel 2, await for receive
   yield ch2(34);
-  console.log('send: ch2 = 34');
+  console.log('sent: ch2 = 34');
 
   try {
     // receive error from channel 1
     value = yield ch1;
     console.log('recv: ch1 =', value);
   } catch (err) {
-    console.log(String(err));
+    console.log('recv: ch1 err', String(err));
   }
 
   // close the channel 2
@@ -126,7 +126,7 @@ co(function *() {
 
   // send value into channel 1, await for receive
   yield ch1(12);
-  console.log('send: ch1 = 12');
+  console.log('sent: ch1 = 12');
 
   // receive value from channel 2
   var value = yield ch2;
@@ -134,7 +134,7 @@ co(function *() {
 
   // send error into channel 1, await for receive
   yield ch1(new Error('custom error'));
-  console.log('send: ch1 err');
+  console.log('sent: ch1 err');
 
   // receive value from closing channel 2
   value = yield ch2;
