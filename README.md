@@ -1,8 +1,10 @@
-aa-chan
-=======
+aa-chan - async await channel
+=============================
 
   A [go](http://golang.org) style channel implementation
   that works well with [co](https://github.com/visionmedia/co).
+
+  [Japanese version/■日本語版はこちら■](README-JP.md#readme)
 
 Installation
 ------------
@@ -14,14 +16,15 @@ $ npm install aa-chan
 Usage
 -----
 
-  Chan does not directly use any ES6 Harmony features, 
-  but it is designed to work well with co,
+  `aa-chan` does not directly use any ES6 Harmony features, 
+  but it is designed to work well with [co](https://github.com/visionmedia/co),
   a control flow library based on ES6 generators.
+
   The following example uses co and requires `node 0.11.x` (unstable)
-  and must be run with the `--harmony-generators` flag.
+  and must be run with the `--harmony-generators` or `--harmony` flag.
   Future stable versions of node.js will include support for generators.
 
-### use co generators
+### example using co generators
 
 ```js
 // require the dependencies
@@ -42,7 +45,7 @@ co(function *() {
   // yield the channel to pull the value off the channel
   var contents = yield ch;
 
-  // use the value
+  // use the value as you like
   console.log(String(contents));
 
 })();
@@ -51,6 +54,7 @@ co(function *() {
 ### send value asynchronously, await for receive value
 
 ```js
+// require the dependencies
 var chan = require('aa-chan');
 var co   = require('co');
 
@@ -83,6 +87,7 @@ co(function *() {
 ### await for send value, await for receive value
 
 ```js
+// require the dependencies
 var chan = require('aa-chan');
 var co   = require('co');
 
@@ -121,7 +126,7 @@ co(function *() {
   // send error into channel 1, await for receive
   yield ch1(new Error('custom error'));
 
-  // receive value from channel 2
+  // receive value from closing channel 2
   value = yield ch2;
   if (value === ch2.empty) {
     console.log('ch2 is empty');
