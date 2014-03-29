@@ -67,9 +67,11 @@ co(function *() {
 
   // チャネル#1から値を受け取ります。
   var value = yield ch1;
+  console.log('recv: ch1 =', value);
 
   // チャネル#2に値を送り込みます。
   ch2(34);
+  console.log('send: ch2 = 34');
 
 })();
 
@@ -77,9 +79,11 @@ co(function *() {
 
   // チャネル#1に値を送り込みます。
   ch1(12);
+  console.log('send: ch1 = 12');
 
   // チャネル#2から値を受け取ります。
   var value = yield ch2;
+  console.log('recv: ch2 =', value);
 
 })();
 ```
@@ -99,13 +103,16 @@ co(function *() {
 
   // チャネル#1から値を受け取ります。
   var value = yield ch1;
+  console.log('recv: ch1 =', value);
 
   // チャネル#2に値を送り込み、受け取られるまで待ちます。
   yield ch2(34);
+  console.log('send: ch2 = 34');
 
   try {
     // チャネル#1からエラーを受け取ります。
     value = yield ch1;
+    console.log('recv: ch1 =', value);
   } catch (err) {
     console.log(String(err));
   }
@@ -119,17 +126,22 @@ co(function *() {
 
   // チャネル#1に値を送り込み、受け取られるまで待ちます。
   yield ch1(12);
+  console.log('send: ch1 = 12');
 
   // チャネル#2から値を受け取ります。
   var value = yield ch2;
+  console.log('recv: ch2 =', value);
 
   // チャネル#1に値を送り込み、受け取られるまで待ちます。
   yield ch1(new Error('custom error'));
+  console.log('send: ch1 err');
 
   // 閉じられようとしているチャネル#2から値を受け取ります。
   value = yield ch2;
   if (value === ch2.empty) {
-    console.log('チャネル#2は空');
+    console.log('ch2 is empty');
+  } else {
+    console.log('recv: ch2 =', value);
   }
 
 })();
@@ -151,18 +163,24 @@ var ch = chan();
 
 // チャネルに値を送り込みます。
 ch(123);
+console.log('send: ch = 123');
 
 // チャネルから値を受け取ります。
 ch(function (err, value) {
-  console.log(value);
+  if (err) {
+    console.log('recv: ch err', String(err));
+  } else {
+    console.log('recv: ch =', value);
+  }
 });
 ```
 
-### get value from regular node function, set channel as callback function
+### 通常の node 関数から値を取得するために、コールバック関数としてチャネルをセットする
 
 ```js
 // 依存関係 require
 var chan = require('aa-chan');
+var fs   = require('fs');
 
 // 新しいチャネルを作成します。
 var ch = chan();
@@ -170,9 +188,14 @@ var ch = chan();
 // ファイルシステムのファイル読込み関数のコールバックとして
 // チャネルを渡すと、ファイル内容がチャネルに送り込まれます。
 fs.readFile(__dirname + '/README.md', ch);
+console.log('read: to ch');
 
 // コールバック関数を引数にチャネルを呼び出すと、チャネルの値を受け取れます。
 ch(function (err, contents) {
-  console.log(String(contents));
+  if (err) {
+    console.log('recv: ch err', String(err));
+  } else {
+    console.log('recv: ch =', String(contents));
+  }
 });
 ```

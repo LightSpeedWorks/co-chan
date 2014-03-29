@@ -66,9 +66,11 @@ co(function *() {
 
   // receive value from channel 1
   var value = yield ch1;
+  console.log('recv: ch1 =', value);
 
   // send value into channel 2
   ch2(34);
+  console.log('send: ch2 = 34');
 
 })();
 
@@ -76,9 +78,11 @@ co(function *() {
 
   // send value into channel 1
   ch1(12);
+  console.log('send: ch1 = 12');
 
   // receive value from channel 2
   var value = yield ch2;
+  console.log('recv: ch2 =', value);
 
 })();
 ```
@@ -99,13 +103,16 @@ co(function *() {
 
   // receive value from channel 1
   var value = yield ch1;
+  console.log('recv: ch1 =', value);
 
   // send value into channel 2, await for receive
   yield ch2(34);
+  console.log('send: ch2 = 34');
 
   try {
     // receive error from channel 1
     value = yield ch1;
+    console.log('recv: ch1 =', value);
   } catch (err) {
     console.log(String(err));
   }
@@ -119,17 +126,22 @@ co(function *() {
 
   // send value into channel 1, await for receive
   yield ch1(12);
+  console.log('send: ch1 = 12');
 
   // receive value from channel 2
   var value = yield ch2;
+  console.log('recv: ch2 =', value);
 
   // send error into channel 1, await for receive
   yield ch1(new Error('custom error'));
+  console.log('send: ch1 err');
 
   // receive value from closing channel 2
   value = yield ch2;
   if (value === ch2.empty) {
     console.log('ch2 is empty');
+  } else {
+    console.log('recv: ch2 =', value);
   }
 
 })();
@@ -153,10 +165,15 @@ var ch = chan();
 
 // send value into the channel
 ch(123);
+console.log('send: ch = 123');
 
 // receive value from the channel
 ch(function (err, value) {
-  console.log(value);
+  if (err) {
+    console.log('recv: ch err', String(err));
+  } else {
+    console.log('recv: ch =', value);
+  }
 });
 ```
 
@@ -165,6 +182,7 @@ ch(function (err, value) {
 ```js
 // require the dependencies
 var chan = require('aa-chan');
+var fs   = require('fs');
 
 // make a new channel
 var ch = chan();
@@ -172,9 +190,14 @@ var ch = chan();
 // pass the channel as the callback to filesystem read file function
 // this will push the file contents in to the channel
 fs.readFile(__dirname + '/README.md', ch);
+console.log('read: to ch');
 
 // call with callback to the channel as thunk to pull the value off the channel
 ch(function (err, contents) {
-  console.log(String(contents));
+  if (err) {
+    console.log('recv: ch err', String(err));
+  } else {
+    console.log('recv: ch =', String(contents));
+  }
 });
 ```
