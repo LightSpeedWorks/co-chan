@@ -16,7 +16,7 @@ $ npm install aa-chan
 Usage
 -----
 
-  `aa-chan` does not directly use any ES6 Harmony features, 
+  **aa-chan** does not directly use any ES6 Harmony features, 
   but it is designed to work well with [co](https://github.com/visionmedia/co),
   a control flow library based on ES6 generators.
 
