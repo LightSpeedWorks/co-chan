@@ -201,3 +201,8 @@ ch(function (err, contents) {
   }
 });
 ```
+
+License
+-------
+
+  MIT

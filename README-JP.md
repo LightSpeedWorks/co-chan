@@ -199,3 +199,8 @@ ch(function (err, contents) {
   }
 });
 ```
+
+ライセンス
+----------
+
+  MIT
