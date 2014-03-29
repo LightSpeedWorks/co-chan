@@ -3,8 +3,8 @@ aa-chan - async await channel
 
   [English version](README.md#readme)
 
-  A [go](http://golang.org) style channel implementation
-  that works well with [co](https://github.com/visionmedia/co).
+  [co](https://github.com/visionmedia/co) と一緒に非常にうまく動作する
+  [Go](http://golang.org) 言語スタイル・チャネルの実装です。
 
 インストレーション
 ------------------
@@ -16,7 +16,7 @@ $ npm install aa-chan
 使い方
 ------
 
-  `aa-chan` は直接 ES6 Harmony の機能を使用していませんが、
+  **aa-chan** は直接 ES6 Harmony の機能を使用していませんが、
   ES6 generators をベースにした制御フローライブラリである
   [co](https://github.com/visionmedia/co)
   で非常にうまく動作する様にデザインされています。
