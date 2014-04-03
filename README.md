@@ -1,5 +1,5 @@
-aa-chan - async await channel
-=============================
+co-chan - go like channel
+=========================
 
   A [go](http://golang.org) style channel implementation
   that works well with [co](https://github.com/visionmedia/co).
@@ -15,13 +15,13 @@ Installation
 ------------
 
 ```bash
-$ npm install aa-chan
+$ npm install co-chan
 ```
 
 Usage
 -----
 
-  **aa-chan** does not directly use any ES6 Harmony features, 
+  **co-chan** does not directly use any ES6 Harmony features, 
   but it is designed to work well with [co](https://github.com/visionmedia/co),
   a control flow library based on ES6 generators.
 
@@ -33,7 +33,7 @@ Usage
 
 ```js
 // require the dependencies
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var co   = require('co');
 var fs   = require('fs');
 
@@ -60,7 +60,7 @@ co(function *() {
 
 ```js
 // require the dependencies
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var co   = require('co');
 
 // make two channels
@@ -105,7 +105,7 @@ recv: ch2 = 34
 
 ```js
 // require the dependencies
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var co   = require('co');
 
 // make two channels
@@ -181,7 +181,7 @@ without co
 
 ```js
 // require the dependencies
-var chan = require('aa-chan');
+var chan = require('co-chan');
 
 // make a new channel
 var ch = chan();
@@ -211,7 +211,7 @@ recv: ch = 123
 
 ```js
 // require the dependencies
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var fs   = require('fs');
 
 // make a new channel

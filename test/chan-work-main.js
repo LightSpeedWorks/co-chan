@@ -3,7 +3,7 @@
 'use strict';
 
 try {
-  var chan = require('aa-chan');
+  var chan = require('co-chan');
 } catch (err) {
   var chan = require('../lib/chan');
 }

@@ -1,5 +1,5 @@
-aa-chan - async await channel
-=============================
+co-chan - go like channel
+=========================
 
   [English version](README.md#readme)
 
@@ -14,13 +14,13 @@ aa-chan - async await channel
 ------------------
 
 ```bash
-$ npm install aa-chan
+$ npm install co-chan
 ```
 
 使い方
 ------
 
-  **aa-chan** は直接 ES6 Harmony の機能を使用していませんが、
+  **co-chan** は直接 ES6 Harmony の機能を使用していませんが、
   ES6 generators をベースにした制御フローライブラリである
   [co](https://github.com/visionmedia/co)
   と一緒に使うとうまく動作する様にデザインされています。
@@ -33,7 +33,7 @@ $ npm install aa-chan
 
 ```js
 // 依存関係 require
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var co   = require('co');
 var fs   = require('fs');
 
@@ -60,7 +60,7 @@ co(function *() {
 
 ```js
 // 依存関係 require
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var co   = require('co');
 
 // 2つのチャネルを作成します。
@@ -105,7 +105,7 @@ recv: ch2 = 34
 
 ```js
 // 依存関係 require
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var co   = require('co');
 
 // 2つのチャネルを作成します。
@@ -181,7 +181,7 @@ co を使用しないで使用する場合
 
 ```js
 // 依存関係 require
-var chan = require('aa-chan');
+var chan = require('co-chan');
 
 // 新しいチャネルを作成します。
 var ch = chan();
@@ -211,7 +211,7 @@ recv: ch = 123
 
 ```js
 // 依存関係 require
-var chan = require('aa-chan');
+var chan = require('co-chan');
 var fs   = require('fs');
 
 // 新しいチャネルを作成します。

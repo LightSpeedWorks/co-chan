@@ -1,7 +1,7 @@
 {
-  "name": "aa-chan",
+  "name": "co-chan",
   "version": "0.0.0",
-  "description": "aa-chan",
+  "description": "co-chan",
   "main": "lib/chan.js",
   "dependencies": {},
   "devDependencies": {
@@ -19,12 +19,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LightSpeedWorks/aa-chan.git"
+    "url": "https://github.com/LightSpeedWorks/co-chan.git"
   },
   "bugs": {
-    "url": "https://github.com/LightSpeedWorks/aa-chan/issues"
+    "url": "https://github.com/LightSpeedWorks/co-chan/issues"
   },
-  "homepage": "https://github.com/LightSpeedWorks/aa-chan#readme",
+  "homepage": "https://github.com/LightSpeedWorks/co-chan#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   }
