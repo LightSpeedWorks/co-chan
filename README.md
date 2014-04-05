@@ -1,4 +1,4 @@
-co-chan - go like channel
+[co-chan](https://www.npmjs.org/package/co-chan) - [Go](http://golang.org) like channel
 =========================
 
   A [go](http://golang.org) style channel implementation
@@ -243,3 +243,8 @@ License
 -------
 
   MIT
+
+Git Repository
+--------------
+
+  LightSpeedWorks/[co-chan](https://github.com/LightSpeedWorks/co-chan#readme)

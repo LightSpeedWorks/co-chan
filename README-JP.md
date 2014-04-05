@@ -1,4 +1,4 @@
-co-chan - go like channel
+[co-chan](https://www.npmjs.org/package/co-chan) - [Go](http://golang.org) 言語スタイルのチャネル
 =========================
 
   [English version](README.md#readme)
@@ -243,3 +243,8 @@ recv: ch = this is README.md
 ----------
 
   MIT
+
+Git Repository
+--------------
+
+  LightSpeedWorks/[co-chan](https://github.com/LightSpeedWorks/co-chan#readme)
