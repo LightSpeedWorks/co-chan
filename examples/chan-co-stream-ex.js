@@ -3,9 +3,9 @@
 // require the dependencies
 // 依存関係 require
 try {
-  var chan = require('co-chan');
-} catch (err) {
   var chan = require('../lib/chan');
+} catch (err) {
+  var chan = require('co-chan');
 }
 var net = require('net');
 var co = require('co');
