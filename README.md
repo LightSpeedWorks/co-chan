@@ -18,6 +18,8 @@ Installation
 $ npm install co-chan
 ```
 
+[![npm][npm-co-chan.png]][npm-co-chan]
+
 Usage
 -----
 
@@ -248,3 +250,6 @@ Git Repository
 --------------
 
   LightSpeedWorks/[co-chan](https://github.com/LightSpeedWorks/co-chan#readme)
+
+[npm-co-chan]: https://nodei.co/npm/co-chan
+[npm-co-chan.png]: https://nodei.co/npm/co-chan.png
