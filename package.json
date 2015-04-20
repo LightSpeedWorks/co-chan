@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/LightSpeedWorks/co-chan#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   }
 }
