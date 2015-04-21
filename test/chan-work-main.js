@@ -159,27 +159,38 @@ describe('test chan', function () {
     act1 = [];
     act2 = [];
 
-    console.log('1#%j 2#%j', act1, act2);
-
     var ch = chan(null, 1);
 
     // console.log('ch 1');
     ch(1)(cb2); // send
+    assert.deepEqual(act2.shift(), [null, 1], 'send 1 buffering');
 
     // console.log('ch 2');
     ch(2)(cb2); // send
+    assert.deepEqual(act2, [], 'send 2 pending');
 
     // console.log('ch');
     ch(cb); // recv
 
-    // console.log('ch');
-    ch(cb); // recv
+    assert.deepEqual(act1.shift(), [null, 1], 'recv 1');
+    assert.deepEqual(act2, [], 'send 1 ???');
+    // なんかおかしい。ここで、cb2 が呼ばれるべき
 
     // console.log('ch');
     ch(cb); // recv
+    assert.deepEqual(act1.shift(), [null, 2], 'recv 2');
+    assert.deepEqual(act2.shift(), [null, 2], 'send 2 complete');
+    // なんかおかしい
+
+    // console.log('ch');
+    ch(cb); // recv
+    assert.deepEqual(act1, [], 'recv pending');
 
     // console.log('ch 3');
     ch(3)(cb2); // send
+    assert.deepEqual(act1.shift(), [null, 3], 'recv 3');
+    assert.deepEqual(act2.shift(), [null, 3], 'send 3 complete');
+    console.log('1#%j 2#%j', act1, act2);
 
     // console.log('ch.end');
     ch.end(); // end
