@@ -14,6 +14,9 @@
 Installation
 ------------
 
+[![NPM](https://nodei.co/npm/co-chan.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/co-chan/)
+[![NPM](https://nodei.co/npm-dl/co-chan.png?height=2)](https://nodei.co/npm/co-chan/)
+
 ```bash
 $ npm install co-chan
 ```
