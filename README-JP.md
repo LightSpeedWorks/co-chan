@@ -20,8 +20,6 @@
 $ npm install co-chan
 ```
 
-[![npm][npm-co-chan.png]][npm-co-chan]
-
 使い方
 ------
 
