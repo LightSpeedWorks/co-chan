@@ -3,7 +3,7 @@
 describe('test chan simple', function () {
   'use strict';
 
-  var chan = require('../lib/chan-simple');
+  var chan = require('../examples/chan-simple');
   var assert = require('assert');
 
   var ch = chan();

@@ -6,7 +6,7 @@ describe('test chan', function () {
   var assert = require('assert');
 
   try {
-    var chan = require('../lib/chan');
+    var chan = require('../chan');
   } catch (err) {
     var chan = require('co-chan');
   }
