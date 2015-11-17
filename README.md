@@ -24,9 +24,9 @@ $ npm install co-chan
 Usage
 -----
 
-  **co-chan** does not directly use any ES6 Harmony features, 
+  **co-chan** does not directly use any ES2015(ES6) features, 
   but it is designed to work well with [co](https://github.com/visionmedia/co),
-  a control flow library based on ES6 generators.
+  a control flow library based on ES2015(ES6) generators.
 
   The following example uses co and requires `node 0.11.x` (unstable)
   and must be run with the `--harmony-generators` or `--harmony` flag.

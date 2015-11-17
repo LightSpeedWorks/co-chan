@@ -23,8 +23,8 @@ $ npm install co-chan
 使い方
 ------
 
-  **co-chan** は直接 ES6 Harmony の機能を使用していませんが、
-  ES6 generators をベースにした制御フローライブラリである
+  **co-chan** は直接 ES2015(ES6) の機能を使用していませんが、
+  ES2015(ES6) generators をベースにした制御フローライブラリである
   [co](https://github.com/visionmedia/co)
   と一緒に使うとうまく動作する様にデザインされています。
 
