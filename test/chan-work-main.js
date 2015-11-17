@@ -6,9 +6,9 @@ describe('test chan', function () {
 	var assert = require('assert');
 
 	try {
-		var chan = require('../chan');
+		var Channel = require('../chan');
 	} catch (err) {
-		var chan = require('co-chan');
+		var Channel = require('co-chan');
 	}
 
 	var act1 = [];
@@ -42,7 +42,7 @@ describe('test chan', function () {
 
 		act1 = [];
 
-		var ch = chan();
+		var ch = Channel();
 		// console.log('ch 1');
 		ch(1); // send
 		assert.deepEqual(act1, [], 'send 1');
@@ -97,7 +97,7 @@ describe('test chan', function () {
 		act1 = [];
 		act2 = [];
 
-		var ch = chan();
+		var ch = Channel();
 
 		// console.log('ch 1');
 		ch(1)(cb2); // send
@@ -159,7 +159,7 @@ describe('test chan', function () {
 		act1 = [];
 		act2 = [];
 
-		var ch = chan(null, 1);
+		var ch = Channel(null, 1);
 
 		// console.log('ch 1');
 		ch(1)(cb2); // send
@@ -210,7 +210,7 @@ describe('test chan', function () {
 		act1 = [];
 		act2 = [];
 
-		var ch = chan(null, 2);
+		var ch = Channel(null, 2);
 
 		// console.log('ch 1');
 		ch(1)(cb2); // send
@@ -272,7 +272,7 @@ describe('test chan', function () {
 		act1 = [];
 		act2 = [];
 
-		var ch = chan(null, Infinity);
+		var ch = Channel(null, Infinity);
 
 		// console.log('ch 1');
 		ch(1)(cb2); // send

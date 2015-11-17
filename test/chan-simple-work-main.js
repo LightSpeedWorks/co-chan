@@ -3,10 +3,10 @@
 describe('test chan simple', function () {
 	'use strict';
 
-	var chan = require('../examples/chan-simple');
+	var Channel = require('../examples/chan-simple');
 	var assert = require('assert');
 
-	var ch = chan();
+	var ch = Channel();
 	var act = [];
 
 	function cb(err, val) {
