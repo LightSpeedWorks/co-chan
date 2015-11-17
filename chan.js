@@ -46,27 +46,27 @@
 		function channel(a, b) {
 			// yield callback
 			if (typeof a === 'function')
-				return channel.recv(a);
+				return recv(a);
 
 			// error
 			if (a instanceof Error)
-				return channel.send(a);
+				return send(a);
 
 			// value or undefined
 			if (arguments.length <= 1)
-				return channel.send(a);
+				return send(a);
 
 			var args = slice.call(arguments);
 
 			if (a == null) {
 				if (arguments.length === 2)
-					return channel.send(b);
+					return send(b);
 				else
 					args.shift();
 			}
 
 			// (null, value,...) -> [value, ...]
-			return channel.send(args);
+			return send(args);
 		}
 
 		var isClosed = false;    // send stream is closed
@@ -87,17 +87,17 @@
 			size = 0;
 
 		// enqueue into buffer
-		var enq = function enq(bomb) {
+		function enq(bomb) {
 			if (buffCallbacks.length < size) {
 				buffCallbacks.push(bomb);
 				bomb.sent = true;
 			}
 			else
 				sendCallbacks.push(bomb);
-		}
+		} // enq
 
 		// dequeue from buffer or pendings
-		var deq = function deq() {
+		function deq() {
 			var bomb = null;
 			if (buffCallbacks.length > 0) {
 				bomb = buffCallbacks.shift();
@@ -107,9 +107,9 @@
 			else if (sendCallbacks.length > 0)
 				bomb = sendCallbacks.shift();
 			return bomb;
-		}
+		} // deq
 
-		var send = function send(val) {
+		function send(val) {
 			if (isClosed)
 				throw new Error('Cannot send to closed channel');
 
@@ -131,9 +131,9 @@
 				fire(bomb);
 			}
 			return channel;
-		}; // send
+		} // send
 
-		var recv = function recv(cb) {
+		function recv(cb) {
 			if (done())
 				return complete(cb, empty);
 
@@ -145,9 +145,9 @@
 			else
 				recvCallbacks.push(cb);
 			return;
-		}; // recv
+		} // recv
 
-		var done = function done() {
+		function done() {
 			if (!isDone && isClosed &&
 					buffCallbacks.length === 0 &&
 					sendCallbacks.length === 0) {
@@ -157,25 +157,25 @@
 			}
 
 			return isDone;
-		}; // done
+		} // done
 
-		var close = function close() {
+		function close() {
 			isClosed = true;
 			return done();
-		}; // close
+		} // close
 
-		var readable = function readable() {
+		function readable() {
 			var buf = this.read();
 			if (!buf) return;
 			send(buf);
-		}; // readable
+		} // readable
 
-		var stream = function stream(stream) {
+		function stream(stream) {
 			stream.on('end', close);
 			stream.on('error', send);
 			stream.on('readable', readable);
-			return this;
-		}; // stream
+			return channel;
+		} // stream
 
 		channel.size  = size;
 		channel.empty = empty;
