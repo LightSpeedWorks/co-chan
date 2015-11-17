@@ -5,31 +5,39 @@
 
 	var slice = Array.prototype.slice;
 
-	function makeChan(empty) {
+	// recv: chan(cb)
+	// send: chan(err, data)
+	// send: chan() or chan(undefined)
+	// send: chan(data)
+	// send: chan(val or err)
+	// chan.end()
+	// chan.readable()
+	// chan.size
+	// chan.empty
+	// chan.done()
+
+	function Channel(empty) {
 		if (arguments.length > 1)
 			throw new Error('makeChan: too many arguments');
 
-		function fn(a, b) {
+		function channel(a, b) {
 			// yield callback
-			if (typeof a === 'function') {
-				return fn.recv(a);
-			}
+			if (typeof a === 'function')
+				return recv(a);
 
-			if (a instanceof Error) {
-				// error
-				return fn.send(a);
-			}
+			// error
+			if (a instanceof Error)
+				return send(a);
 
-			if (arguments.length <= 1) {
-				// value or undefined
-				return fn.send(a);
-			}
+			// value or undefined
+			if (arguments.length <= 1)
+				return send(a);
 
 			var args = slice.call(arguments);
 
-			if (a === null || a === undefined) {
+			if (a == null) {
 				if (arguments.length === 2) {
-					return fn.send(b);
+					return send(b);
 				}
 				else {
 					args.shift();
@@ -37,98 +45,78 @@
 			}
 
 			// (null, value,...) -> [value, ...]
-			return fn.send(args);
+			return send(args);
 		}
 
-		return new Channel(fn, empty), fn;
-	}
-
-	// recv: chan(cb)
-	// send: chan(err, data)
-	// send: chan() or chan(undefined)
-	// send: chan(data)
-	// chan.end()
-	// chan.readable()
-	// chan.size
-	// chan.empty
-	// chan.done()
-	// chan.send(val or err)
-	// chan.recv(cb)
-
-	function Channel(fn, empty) {
 		var isClosed = false;    // send stream is closed
 		var isDone = false;      // receive stream is done
 		var recvCallbacks = [];  // receive pending callbacks queue
 		var values        = [];  // send pending values
 
-		if (typeof empty === 'undefined') {
+		if (typeof empty === 'undefined')
 			empty = new Object();
-		} else if (typeof empty === 'function') {
+		else if (typeof empty === 'function')
 			empty = new empty();
-		}
 
-		var send = function send(val) {
-			if (isClosed) {
+		function send(val) {
+			if (isClosed)
 				throw new Error('Cannot send to closed channel');
-			} else if (recvCallbacks.length > 0) {
-				call(recvCallbacks.shift(), val);
-			} else {
+			else if (recvCallbacks.length > 0)
+				complete(recvCallbacks.shift(), val);
+			else
 				values.push(val);
-			}
-		}; // send
+		} // send
 
-		var recv = function recv(cb) {
-			if (done()) {
-				call(cb, empty);
-			} else if (values.length > 0) {
-				call(cb, values.shift());
-			} else {
+		function recv(cb) {
+			if (done())
+				complete(cb, empty);
+			else if (values.length > 0)
+				complete(cb, values.shift());
+			else
 				recvCallbacks.push(cb);
-			}
 			return;
-		}; // recv
+		} // recv
 
-		var done = function done() {
+		function done() {
 			if (!isDone && isClosed && values.length === 0) {
 				isDone = true;
-				// call each pending callback with the empty value
-				recvCallbacks.forEach(function(cb) { call(cb, empty); });
+				// complete each pending callback with the empty value
+				recvCallbacks.forEach(function(cb) { complete(cb, empty); });
 			}
 
 			return isDone;
-		}; // done
+		} // done
 
-		var close = function close() {
+		function close() {
 			isClosed = true;
 			return done();
-		}; // close
+		} // close
 
-		var readable = function readable() {
+		function readable() {
 			var buf = this.read();
 			if (!buf) return;
 			send(buf);
-		}; // readable
+		} // readable
 
-		fn.empty = empty;
-		fn.close = close;
-		fn.done  = done;
-		fn.send  = send;
-		fn.recv  = recv;
+		channel.empty = empty;
+		channel.close = close;
+		channel.done  = done;
 
 		// for stream
-		fn.end      = close;
-		fn.readable = readable;
+		channel.end      = close;
+		channel.readable = readable;
+
+		return channel;
 
 	} // Channel
 
-	function call(cb, val) {
-		if (val instanceof Error) {
+	function complete(cb, val) {
+		if (val instanceof Error)
 			cb(val);
-		} else {
+		else
 			cb(null, val);
-		}
-	} // call
+	} // complete
 
-	exports = module.exports = makeChan;
+	module.exports = Channel;
 
 })();
