@@ -18,7 +18,7 @@
 
 	function Channel(empty) {
 		if (arguments.length > 1)
-			throw new Error('makeChan: too many arguments');
+			throw new Error('Channel: too many arguments');
 
 		function channel(a, b) {
 			// yield callback
@@ -81,7 +81,10 @@
 			if (!isDone && isClosed && values.length === 0) {
 				isDone = true;
 				// complete each pending callback with the empty value
-				recvCallbacks.forEach(function(cb) { complete(cb, empty); });
+				var cb;
+				while (cb = recvCallbacks.shift())
+					complete(cb, empty);
+				//recvCallbacks.forEach(function(cb) { complete(cb, empty); });
 			}
 
 			return isDone;

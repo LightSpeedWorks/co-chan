@@ -7,7 +7,6 @@
 
 	// recv:
 	//   yield chan -> (cb)
-	//   yield chan.recv -> (cb)
 
 	// send:
 	//   yield chan() -> (cb)
@@ -15,10 +14,6 @@
 	//   yield chan(err) -> (cb)
 	//   yield chan(err, val) -> (cb)
 	//   yield chan([err,] val1, val2, val3, ...) -> (cb)
-	//   yield chan.send() -> (cb)
-	//   yield chan.send(val) -> (cb)
-	//   yield chan.send(err) -> (cb)
-	//   yield chan.send(array) -> (cb)
 
 	// property:
 	//   chan.size - buffer size
@@ -41,7 +36,7 @@
 
 	function Channel(empty, size) {
 		if (arguments.length > 2)
-			throw new Error('makeChan: too many arguments');
+			throw new Error('Channel: too many arguments');
 
 		function channel(a, b) {
 			// yield callback
@@ -152,8 +147,11 @@
 					buffCallbacks.length === 0 &&
 					sendCallbacks.length === 0) {
 				isDone = true;
-				// call each pending callback with the empty value
-				recvCallbacks.forEach(function(cb) { complete(cb, empty); });
+				// complete each pending callback with the empty value
+				var cb;
+				while (cb = recvCallbacks.shift())
+					complete(cb, empty);
+				//recvCallbacks.forEach(function(cb) { complete(cb, empty); });
 			}
 
 			return isDone;
