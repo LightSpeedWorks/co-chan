@@ -1,9 +1,9 @@
 // require the dependencies
 // 依存関係 require
 try {
-  var chan = require('../lib/chan');
+	var chan = require('../lib/chan');
 } catch (err) {
-  var chan = require('co-chan');
+	var chan = require('co-chan');
 }
 
 // make a new channel
@@ -18,11 +18,11 @@ console.log('send: ch = 123');
 // receive value from the channel
 // チャネルから値を受け取ります。
 ch(function (err, value) {
-  if (err) {
-    console.log('recv: ch err', String(err));
-  } else {
-    console.log('recv: ch =', value);
-  }
+	if (err) {
+		console.log('recv: ch err', String(err));
+	} else {
+		console.log('recv: ch =', value);
+	}
 });
 
 // send: ch = 123

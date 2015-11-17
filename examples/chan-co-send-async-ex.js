@@ -1,9 +1,9 @@
 // require the dependencies
 // 依存関係 require
 try {
-  var chan = require('../lib/chan');
+	var chan = require('../lib/chan');
 } catch (err) {
-  var chan = require('co-chan');
+	var chan = require('co-chan');
 }
 var co   = require('co');
 
@@ -14,29 +14,29 @@ var ch2 = chan();
 
 co(function *() {
 
-  // receive value from channel 1
-  // チャネル#1から値を受け取ります。
-  var value = yield ch1;
-  console.log('recv: ch1 =', value);
+	// receive value from channel 1
+	// チャネル#1から値を受け取ります。
+	var value = yield ch1;
+	console.log('recv: ch1 =', value);
 
-  // send value into channel 2
-  // チャネル#2に値を送り込みます。
-  ch2(34);
-  console.log('send: ch2 = 34');
+	// send value into channel 2
+	// チャネル#2に値を送り込みます。
+	ch2(34);
+	console.log('send: ch2 = 34');
 
 })();
 
 co(function *() {
 
-  // send value into channel 1
-  // チャネル#1に値を送り込みます。
-  ch1(12);
-  console.log('send: ch1 = 12');
+	// send value into channel 1
+	// チャネル#1に値を送り込みます。
+	ch1(12);
+	console.log('send: ch1 = 12');
 
-  // receive value from channel 2
-  // チャネル#2から値を受け取ります。
-  var value = yield ch2;
-  console.log('recv: ch2 =', value);
+	// receive value from channel 2
+	// チャネル#2から値を受け取ります。
+	var value = yield ch2;
+	console.log('recv: ch2 =', value);
 
 })();
 
