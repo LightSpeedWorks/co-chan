@@ -36,12 +36,12 @@ Usage
 
 ```js
 // require the dependencies
-var chan = require('co-chan');
-var co   = require('co');
-var fs   = require('fs');
+var Channel = require('co-chan');
+var co = require('co');
+var fs = require('fs');
 
 // make a new channel
-var ch = chan();
+var ch = Channel();
 
 // execute a co generator
 co(function *() {
@@ -56,19 +56,19 @@ co(function *() {
   // use the value as you like
   console.log(String(contents));
 
-})();
+});
 ```
 
 ### send value asynchronously, await for receive value
 
 ```js
 // require the dependencies
-var chan = require('co-chan');
-var co   = require('co');
+var Channel = require('co-chan');
+var co = require('co');
 
 // make two channels
-var ch1 = chan();
-var ch2 = chan();
+var ch1 = Channel();
+var ch2 = Channel();
 
 co(function *() {
 
@@ -80,7 +80,7 @@ co(function *() {
   ch2(34);
   console.log('send: ch2 = 34');
 
-})();
+});
 
 co(function *() {
 
@@ -92,7 +92,7 @@ co(function *() {
   var value = yield ch2;
   console.log('recv: ch2 =', value);
 
-})();
+});
 ```
 
 output:
@@ -108,12 +108,12 @@ recv: ch2 = 34
 
 ```js
 // require the dependencies
-var chan = require('co-chan');
-var co   = require('co');
+var Channel = require('co-chan');
+var co = require('co');
 
 // make two channels
-var ch1 = chan();  // default buffer size = 0
-var ch2 = chan();
+var ch1 = Channel();  // default buffer size = 0
+var ch2 = Channel();
 
 co(function *() {
 
@@ -136,7 +136,7 @@ co(function *() {
   // close the channel 2
   ch2.end();
 
-})();
+});
 
 co(function *() {
 
@@ -160,7 +160,7 @@ co(function *() {
     console.log('recv: ch2 =', value);
   }
 
-})();
+});
 ```
 
 output:
@@ -184,10 +184,10 @@ without co
 
 ```js
 // require the dependencies
-var chan = require('co-chan');
+var Channel = require('co-chan');
 
 // make a new channel
-var ch = chan();
+var ch = Channel();
 
 // send value into the channel
 ch(123);
@@ -214,11 +214,11 @@ recv: ch = 123
 
 ```js
 // require the dependencies
-var chan = require('co-chan');
-var fs   = require('fs');
+var Channel = require('co-chan');
+var fs = require('fs');
 
 // make a new channel
-var ch = chan();
+var ch = Channel();
 
 // pass the channel as the callback to filesystem read file function
 // this will push the file contents in to the channel

@@ -36,12 +36,12 @@ $ npm install co-chan
 
 ```js
 // 依存関係 require
-var chan = require('co-chan');
-var co   = require('co');
-var fs   = require('fs');
+var Channel = require('co-chan');
+var co = require('co');
+var fs = require('fs');
 
 // 新しいチャネルを作成します。
-var ch = chan();
+var ch = Channel();
 
 // co generator を実行します。
 co(function *() {
@@ -56,19 +56,19 @@ co(function *() {
   // 後は好きに値が使えます。
   console.log(String(contents));
 
-})();
+});
 ```
 
 ### 非同期に値を送り込み、値の受け取りを待ちます。
 
 ```js
 // 依存関係 require
-var chan = require('co-chan');
-var co   = require('co');
+var Channel = require('co-chan');
+var co = require('co');
 
 // 2つのチャネルを作成します。
-var ch1 = chan();
-var ch2 = chan();
+var ch1 = Channel();
+var ch2 = Channel();
 
 co(function *() {
 
@@ -80,7 +80,7 @@ co(function *() {
   ch2(34);
   console.log('send: ch2 = 34');
 
-})();
+});
 
 co(function *() {
 
@@ -92,7 +92,7 @@ co(function *() {
   var value = yield ch2;
   console.log('recv: ch2 =', value);
 
-})();
+});
 ```
 
 出力:
@@ -108,12 +108,12 @@ recv: ch2 = 34
 
 ```js
 // 依存関係 require
-var chan = require('co-chan');
-var co   = require('co');
+var Channel = require('co-chan');
+var co = require('co');
 
 // 2つのチャネルを作成します。
-var ch1 = chan();  // デフォルトバッファサイズはゼロ
-var ch2 = chan();
+var ch1 = Channel();  // デフォルトバッファサイズはゼロ
+var ch2 = Channel();
 
 co(function *() {
 
@@ -136,7 +136,7 @@ co(function *() {
   // チャネル#2を閉じます。
   ch2.end();
 
-})();
+});
 
 co(function *() {
 
@@ -160,7 +160,7 @@ co(function *() {
     console.log('recv: ch2 =', value);
   }
 
-})();
+});
 ```
 
 出力:
@@ -184,10 +184,10 @@ co を使用しないで使用する場合
 
 ```js
 // 依存関係 require
-var chan = require('co-chan');
+var Channel = require('co-chan');
 
 // 新しいチャネルを作成します。
-var ch = chan();
+var ch = Channel();
 
 // チャネルに値を送り込みます。
 ch(123);
@@ -214,11 +214,11 @@ recv: ch = 123
 
 ```js
 // 依存関係 require
-var chan = require('co-chan');
-var fs   = require('fs');
+var Channel = require('co-chan');
+var fs = require('fs');
 
 // 新しいチャネルを作成します。
-var ch = chan();
+var ch = Channel();
 
 // ファイルシステムのファイル読込み関数のコールバックとして
 // チャネルを渡すと、ファイル内容がチャネルに送り込まれます。
