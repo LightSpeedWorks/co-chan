@@ -3,9 +3,9 @@
 // require the dependencies
 // 依存関係 require
 try {
-	var chan = require('../lib/chan');
+	var Channel = require('../chan');
 } catch (err) {
-	var chan = require('co-chan');
+	var Channel = require('co-chan');
 }
 var net = require('net');
 var co = require('co');
@@ -19,7 +19,7 @@ var server = net.createServer(function (soc) {
 
 	// make a new channel
 	// 新しいチャネルを作成します。
-	var ch = chan();
+	var ch = Channel();
 
 	ch.stream(soc);
 	// soc.on('end', ch.end);
@@ -49,7 +49,7 @@ var server = net.createServer(function (soc) {
 
 		console.log('reader: end');
 		server.close();
-	})(); // co reader
+	}); // co reader
 
 }); // net.createServer
 
@@ -76,7 +76,7 @@ co(function *writer() {
 	client.end();
 	console.log('writer: end');
 
-})(); // co writer
+}); // co writer
 
 function sleep(ms) {
 	return function (cb) {

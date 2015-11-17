@@ -1,16 +1,16 @@
 // require the dependencies
 // 依存関係 require
 try {
-	var chan = require('../lib/chan');
+	var Channel = require('../chan');
 } catch (err) {
-	var chan = require('co-chan');
+	var Channel = require('co-chan');
 }
 var co   = require('co');
 var fs   = require('fs');
 
 // make a new channel
 // 新しいチャネルを作成します。
-var ch = chan();
+var ch = Channel();
 
 // execute a co generator
 // co generator を実行します。
@@ -30,4 +30,4 @@ co(function *() {
 	// 後は好きに値が使えます。
 	console.log(String(contents));
 
-})();
+});

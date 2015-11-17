@@ -1,14 +1,14 @@
 // require the dependencies
 // 依存関係 require
 try {
-	var chan = require('../lib/chan');
+	var Channel = require('../chan');
 } catch (err) {
-	var chan = require('co-chan');
+	var Channel = require('co-chan');
 }
 
 // make a new channel
 // 新しいチャネルを作成します。
-var ch = chan();
+var ch = Channel();
 
 // send value into the channel
 // チャネルに値を送り込みます。

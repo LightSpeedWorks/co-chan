@@ -1,16 +1,16 @@
 // require the dependencies
 // 依存関係 require
 try {
-	var chan = require('../lib/chan');
+	var Channel = require('../chan');
 } catch (err) {
-	var chan = require('co-chan');
+	var Channel = require('co-chan');
 }
 var co   = require('co');
 
 // make two channels
 // 2つのチャネルを作成します。
-var ch1 = chan();  // default buffer size = 0
-var ch2 = chan();  // デフォルトバッファサイズはゼロ
+var ch1 = Channel();  // default buffer size = 0
+var ch2 = Channel();  // デフォルトバッファサイズはゼロ
 
 co(function *() {
 
@@ -37,7 +37,7 @@ co(function *() {
 	// チャネル#2を閉じます。
 	ch2.end();
 
-})();
+});
 
 co(function *() {
 
@@ -65,7 +65,7 @@ co(function *() {
 		console.log('recv: ch2 =', value);
 	}
 
-})();
+});
 
 // recv: ch1 = 12
 // sent: ch1 = 12

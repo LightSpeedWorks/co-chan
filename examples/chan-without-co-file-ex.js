@@ -1,15 +1,15 @@
 // require the dependencies
 // 依存関係 require
 try {
-	var chan = require('../lib/chan');
+	var Channel = require('../chan');
 } catch (err) {
-	var chan = require('co-chan');
+	var Channel = require('co-chan');
 }
 var fs   = require('fs');
 
 // make a new channel
 // 新しいチャネルを作成します。
-var ch = chan();
+var ch = Channel();
 
 // pass the channel as the callback to filesystem read file function
 // this will push the file contents in to the channel

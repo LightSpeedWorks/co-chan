@@ -1,16 +1,16 @@
 // require the dependencies
 // 依存関係 require
 try {
-	var chan = require('../lib/chan');
+	var Channel = require('../chan');
 } catch (err) {
-	var chan = require('co-chan');
+	var Channel = require('co-chan');
 }
 var co   = require('co');
 
 // make two channels
 // 2つのチャネルを作成します。
-var ch1 = chan();
-var ch2 = chan();
+var ch1 = Channel();
+var ch2 = Channel();
 
 co(function *() {
 
@@ -24,7 +24,7 @@ co(function *() {
 	ch2(34);
 	console.log('send: ch2 = 34');
 
-})();
+});
 
 co(function *() {
 
@@ -38,7 +38,7 @@ co(function *() {
 	var value = yield ch2;
 	console.log('recv: ch2 =', value);
 
-})();
+});
 
 // recv: ch1 = 12
 // send: ch2 = 34
