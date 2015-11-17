@@ -5,39 +5,6 @@
 
 	var slice = Array.prototype.slice;
 
-	function makeChan(empty, size) {
-		if (arguments.length > 2)
-			throw new Error('makeChan: too many arguments');
-
-		function fn(a, b) {
-			// yield callback
-			if (typeof a === 'function')
-				return fn.recv(a);
-
-			// error
-			if (a instanceof Error)
-				return fn.send(a);
-
-			// value or undefined
-			if (arguments.length <= 1)
-				return fn.send(a);
-
-			var args = slice.call(arguments);
-
-			if (a === null || a === undefined) {
-				if (arguments.length === 2)
-					return fn.send(b);
-				else
-					args.shift();
-			}
-
-			// (null, value,...) -> [value, ...]
-			return fn.send(args);
-		}
-
-		return new Channel(fn, empty, size), fn;
-	}
-
 	// recv:
 	//   yield chan -> (cb)
 	//   yield chan.recv -> (cb)
@@ -72,7 +39,36 @@
 	//   stream.on('readable', chan.readable);
 	//   stream.on('data', chan); // for old style stream
 
-	function Channel(fn, empty, size) {
+	function Channel(empty, size) {
+		if (arguments.length > 2)
+			throw new Error('makeChan: too many arguments');
+
+		function channel(a, b) {
+			// yield callback
+			if (typeof a === 'function')
+				return channel.recv(a);
+
+			// error
+			if (a instanceof Error)
+				return channel.send(a);
+
+			// value or undefined
+			if (arguments.length <= 1)
+				return channel.send(a);
+
+			var args = slice.call(arguments);
+
+			if (a == null) {
+				if (arguments.length === 2)
+					return channel.send(b);
+				else
+					args.shift();
+			}
+
+			// (null, value,...) -> [value, ...]
+			return channel.send(args);
+		}
+
 		var isClosed = false;    // send stream is closed
 		var isDone = false;      // receive stream is done
 		var recvCallbacks = [];  // receive pending callbacks queue
@@ -118,7 +114,7 @@
 				throw new Error('Cannot send to closed channel');
 
 			var bomb = {cb:null, val:val, called:false, sent:false};
-			function fn(cb) {
+			function channel(cb) {
 				if (!bomb.cb) {
 					if (!cb) cb = function dummyCallback(){};
 					bomb.cb = cb;
@@ -126,24 +122,24 @@
 
 				if (bomb.sent)
 					fire(bomb);
-			} // fn(cb)
+			} // channel(cb)
 
 			enq(bomb);
 			if (recvCallbacks.length > 0) {
 				bomb = deq();
-				call(recvCallbacks.shift(), bomb.val);
+				complete(recvCallbacks.shift(), bomb.val);
 				fire(bomb);
 			}
-			return fn;
+			return channel;
 		}; // send
 
 		var recv = function recv(cb) {
 			if (done())
-				return call(cb, empty);
+				return complete(cb, empty);
 
 			var bomb = deq();
 			if (bomb) {
-				call(cb, bomb.val);
+				complete(cb, bomb.val);
 				fire(bomb);
 			}
 			else
@@ -157,7 +153,7 @@
 					sendCallbacks.length === 0) {
 				isDone = true;
 				// call each pending callback with the empty value
-				recvCallbacks.forEach(function(cb) { call(cb, empty); });
+				recvCallbacks.forEach(function(cb) { complete(cb, empty); });
 			}
 
 			return isDone;
@@ -181,26 +177,28 @@
 			return this;
 		}; // stream
 
-		fn.size  = size;
-		fn.empty = empty;
-		fn.close = close;
-		fn.done  = done;
-		fn.send  = send;
-		fn.recv  = recv;
+		channel.size  = size;
+		channel.empty = empty;
+		channel.close = close;
+		channel.done  = done;
+		channel.send  = send;
+		channel.recv  = recv;
 
 		// for stream
-		fn.end      = close;
-		fn.readable = readable;
-		fn.stream   = stream;
+		channel.end      = close;
+		channel.readable = readable;
+		channel.stream   = stream;
+
+		return channel;
 
 	} // Channel
 
-	function call(cb, val) {
+	function complete(cb, val) {
 		if (val instanceof Error)
 			cb(val);
 		else
 			cb(null, val);
-	} // call
+	} // complete
 
 	function fire(bomb) {
 		bomb.sent = true;
@@ -209,6 +207,6 @@
 		bomb.cb(null, bomb.val);
 	} // fire
 
-	exports = module.exports = makeChan;
+	module.exports = Channel;
 
 })();
